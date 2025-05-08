@@ -89,17 +89,10 @@ WSGI_APPLICATION = 'recreation_booking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'recreation_booking_db',
-        'USER': 'postgres',
-        'PASSWORD': '0000',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
+DATABASES = {
+    'default': dj_database_url.config(default='postgres://postgres:0000@localhost:5432/recreation_booking_db')
+}
 
 
 
