@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Черноярская жемчужина</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Flatpickr Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./images/logo.png" type="image/png" sizes="32x32">
+
+</head>
+<body class="font-sans">
+
+<!-- Header -->
+<header class="fixed w-full z-50 bg-white shadow-md">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="././images/logo.png" alt="Логотип" class="h-10 w-auto">
+                <div class="text-xl font-bold text-gray-800">ЧЕРНОЯРСКАЯ ЖЕМЧУЖИНА</div>
+            </div>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="nav-link active-nav">Главная</a>
+                <a href="#accommodation" class="nav-link">Проживание и Питание</a>
+                <a href="#entertainment" class="nav-link">Развлечения</a>
+                <a href="#bath" class="nav-link">Зоны отдыха и бани</a>
+                <a href="#contacts" class="nav-link">Контакты</a>
+                <a href="#hero" class="btn btn-primary">Забронировать</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-800">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white">
+            <div class="flex flex-col space-y-4 py-4">
+                <a href="#home" class="nav-link active-nav">Главная</a>
+                <a href="#accommodation" class="nav-link">Проживание и Питание</a>
+                <a href="#entertainment" class="nav-link">Развлечения</a>
+                <a href="#bath" class="nav-link">Зоны отдыха и бани</a>
+                <a href="#contacts" class="nav-link">Контакты</a>
+                <a href="#hero" class="btn btn-primary">Забронировать</a>
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Back to Top Button -->
+<div id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+
+<!-- Home Section -->
+<section id="home" class="section relative">
+    <div class="hero-grid-horizontal">
+        <div class="hero-item" style="background-image: url('./images/glav1.png')">
+            <div class="overlay"></div>
+        </div>
+        <div class="hero-item" style="background-image: url('./images/glav2.png')">
+            <div class="overlay"></div>
+        </div>
+        <div class="hero-item" style="background-image: url('./images/glav3.png')">
+            <div class="overlay"></div>
+        </div>
+        <div class="hero-item" style="background-image: url('./images/glav1.png')">
+            <div class="overlay"></div>
+        </div>
+    </div>
+    <div class="hero-content">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Отдых в ритме природы в гармонии с собой</h1>
+        <p class="text-3xl text-white mb-4 font-bold">в 30 минутах от города</p>
+        <p class="text-3xl text-white mb-8">Уютные номера, вкусное питание и активный отдых на природе</p>
+        <a href="#accommodation" class="btn btn-outline">Узнать больше</a>
+    </div>
+</section>
+
+<!-- Booking Hero Section -->
+<section id="hero" class="relative bg-gray-800 text-white">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="container mx-auto py-16 relative z-10">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-center gap-6">
+            <!-- Check-in -->
+            <div class="flex items-center space-x-2 bg-white px-5 py-4 rounded-xl shadow w-[180px] h-[70px]">
+                <i class="fas fa-calendar-alt text-green-600 text-lg"></i>
+                <div class="flex flex-col text-sm">
+                    <label for="checkin" class="text-gray-500">Заезд</label>
+                    <input type="text" id="checkin" class="flatpickr-input text-gray-800 text-base focus:outline-none" />
+                </div>
+            </div>
+            <!-- Check-out -->
+            <div class="flex items-center space-x-2 bg-white px-5 py-4 rounded-xl shadow w-[180px] h-[70px]">
+                <i class="fas fa-calendar-check text-green-600 text-lg"></i>
+                <div class="flex flex-col text-sm">
+                    <label for="checkout" class="text-gray-500">Выезд</label>
+                    <input type="text" id="checkout" class="flatpickr-input text-gray-800 text-base focus:outline-none" />
+                </div>
+            </div>
+            <!-- Adults -->
+            <div class="flex items-center space-x-2 bg-white px-5 py-4 rounded-xl shadow w-[140px] h-[70px]">
+                <i class="fas fa-user text-green-600 text-lg"></i>
+                <div class="flex flex-col text-sm">
+                    <label for="adults" class="text-gray-500">Взрослые</label>
+                    <input type="number" id="adults" placeholder="2" min="1" class="text-gray-800 text-base w-12 focus:outline-none" />
+                </div>
+            </div>
+            <!-- Children -->
+            <div class="flex items-center space-x-2 bg-white px-5 py-4 rounded-xl shadow w-[140px] h-[70px]">
+                <i class="fas fa-child text-green-600 text-lg"></i>
+                <div class="flex flex-col text-sm">
+                    <label for="children" class="text-gray-500">Дети</label>
+                    <input type="number" id="children" placeholder="0" min="0" class="text-gray-800 text-base w-12 focus:outline-none" />
+                </div>
+            </div>
+            <!-- Submit Button -->
+            <button type="submit" id="openBookingModalFromHero" class="bg-green-600 text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-green-700 transition h-[70px]">
+                Найти номер
+            </button>
+        </div>
+    </div>
+</section>
+
+<div class="w-full flex justify-center">
+    <div id="availableRooms" class="grid grid-cols-1 gap-6 w-full max-w-3xl mt-6">
+    </div>
+  </div>
+  
+
+<!-- Accommodation Section -->
+<section id="accommodation" class="section bg-gray-100">
+    <div class="section-content">
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">Уютные номера</h2>
+        <p class="text-gray-600 mb-8">
+            Уютные и удобные варианты размещения, а также разнообразные пакеты услуг, идеально подходящие для семейного отдыха.
+        </p>
+        <div class="image-gallery-2">
+            <div class="gallery-item" style="background-image: url('./images/room1.png')"></div>
+            <div class="gallery-item" style="background-image: url('./images/room2.png')"></div>
+        </div>
+        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#hero" class="btn btn-primary">Забронировать</a>
+            <a href="#entertainment" class="btn btn-outline" style="border-color: #4F772D; color: #4F772D;">Наши развлечения</a>
+        </div>
+    </div>
+</section>
+
+<!-- Entertainment Section -->
+<section id="entertainment" class="section parallax" style="background-image: url('./images/grass.png');">
+    <div class="bg-overlay"></div>
+    <div class="section-content">
+        <h2 class="text-4xl font-bold text-white mb-6">Активный отдых и развлечения</h2>
+        <p class="text-white mb-8">
+            Разнообразные активности для всей семьи, которые подарят яркие впечатления и помогут провести время с пользой и радостью.
+        </p>
+        <div class="image-gallery">
+            <div class="gallery-item" style="background-image: url('./images/winter.png')"></div>
+            <div class="gallery-item" style="background-image: url('./images/horse.png')"></div>
+            <div class="gallery-item" style="background-image: url('./images/bike.png')"></div>
+        </div>
+        <a href="#bath" class="btn btn-outline mt-8">Наши зоны отдыха</a>
+    </div>
+</section>
+
+<!-- Bath and BBQ Section -->
+<section id="bath" class="section bg-white">
+    <div class="section-content">
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">БАНИ И BBQ</h2>
+        <p class="text-gray-600 mb-8">
+            Наслаждайтесь уютными вечерами у мангала или в гриль-беседке, а после активного отдыха расслабьтесь в традиционной бане.
+        </p>
+        <div class="image-gallery">
+            <div class="gallery-item" style="background-image: url('./images/banya1.png')"></div>
+            <div class="gallery-item" style="background-image: url('./images/banya2.png')"></div>
+            <div class="gallery-item" style="background-image: url('./images/banya3.png')"></div>
+        </div>
+        <a href="#contacts" class="btn btn-outline mt-8" style="border-color: #4F772D; color: #4F772D;">Как нас найти?</a>
+    </div>
+</section>
+
+<!-- Contacts Section -->
+<section id="contacts" class="section bg-white">
+    <div class="section-content">
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">Как нас найти?</h2>
+        <div class="text-left max-w-2xl mx-auto">
+            <p class="text-lg text-gray-700 mb-4">30 минут от Павлодара до зоны отдыха</p>
+            <p class="text-gray-600 mb-8">
+                По Омской трассе доезжаете до вывески Черноярка, делаете разворот и направо,
+                далее по асфальтированной дороге до самого конца
+            </p>
+        </div>
+        <div class="flex justify-center space-x-4 mb-8">
+            <a href="https://go.2gis.com/BTy7m" class="text-blue-600 hover:text-blue-800 flex items-center">
+                <i class="fab fa-2gis mr-2"></i> 2ГИС
+            </a>
+            <a href="https://maps.app.goo.gl/NAxpjpAHPpJLuivo8" class="text-green-600 hover:text-green-800 flex items-center">
+                <i class="fab fa-google mr-2"></i> Google Maps
+            </a>
+        </div>
+        <!-- Карта Google Maps -->
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25609.74601026451!2d76.80537898882966!3d52.51986567206858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42f852e7435c418b%3A0xcee466eb17f1fbd6!2z0JzQtdC80LDRgNCw0YHQutC-0LPQviDQv9C10YDQtdC00LXQvdGC0YwsINCj0LrRgNCw0LjQutCw!5e0!3m2!1sru!2skz!4v1717360000000!5m2!1sru!2skz" 
+                width="100%" 
+                height="400" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                class="rounded-lg shadow-md">
+            </iframe>
+        </div>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Контакты</h3>
+                <p class="mb-2"><i class="fas fa-phone mr-2"></i> +7 (705) 731-00-58 </p>
+               
+            </div>
+            <div class="bg-gray-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Режим работы</h3>
+                <p class="mb-2">Понедельник - Пятница: 10:00 - 19:00</p>
+                <p class="mb-2">Суббота - Воскресенье: 10:00 - 19:00</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between">
+            <div class="mb-8 md:mb-0">
+                <h3 class="text-xl font-bold mb-4">База отдыха "Черноярская жемчужина"</h3>
+                <p class="mb-2">село Черноярка, Павлодарский район.</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="https://www.instagram.com/pvl_zhemchuzhina/" class="text-white hover:text-gray-300"><i class="fab fa-instagram text-2xl"></i></a>
+                    <a href="https://api.whatsapp.com/send/?phone=77057310058&text&type=phone_number&app_absent=0" class="text-white hover:text-gray-300"><i class="fab fa-whatsapp text-2xl"></i></a>
+                </div>
+            </div>
+            <div class="mb-8 md:mb-0">
+                <h3 class="text-xl font-bold mb-4">Быстрые ссылки</h3>
+                <ul>
+                    <li class="mb-2"><a href="#home" class="hover:text-gray-300">Главная</a></li>
+                    <li class="mb-2"><a href="#accommodation" class="hover:text-gray-300">Проживание</a></li>
+                    <li class="mb-2"><a href="#entertainment" class="hover:text-gray-300">Развлечения</a></li>
+                    <li class="mb-2"><a href="#bath" class="hover:text-gray-300">Бани и BBQ</a></li>
+                    <li><a href="#contacts" class="hover:text-gray-300">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+            <p>&copy; 2023 Черноярская жемчужина. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal Popup -->
+<div id="bookingModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+      <button id="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+      <h2 class="text-2xl font-bold mb-4">Забронировать отдых</h2>
+      <p class="mb-4">Оставьте заявку и мы свяжемся с вами для подтверждения бронирования.</p>
+  
+      <form id="smartBookingForm">
+        <!-- Имя -->
+        <div class="mb-4">
+          <input type="text" id="fullName2" placeholder="Ваше имя" required
+                 class="w-full px-4 py-2 border rounded-lg">
+        </div>
+      
+        <!-- Телефон -->
+        <div class="mb-4">
+          <input type="tel" id="phone2" placeholder="Ваш телефон" required
+                 class="w-full px-4 py-2 border rounded-lg">
+        </div>
+      
+        <!-- Email -->
+        <div class="mb-4">
+          <input type="email" id="email2" placeholder="Ваш email"
+                 class="w-full px-4 py-2 border rounded-lg">
+        </div>
+      
+        <!-- Пожелания -->
+        <div class="mb-4">
+          <textarea id="notes" placeholder="Ваши пожелания"
+                    class="w-full px-4 py-2 border rounded-lg" rows="3"></textarea>
+        </div>
+      
+        <!-- Скрытые поля -->
+        <input type="hidden" id="checkinModal">
+        <input type="hidden" id="checkoutModal">
+        <input type="hidden" id="adults">
+        <input type="hidden" id="children">
+      
+        <!-- Кнопка -->
+        <button type="submit" class="btn btn-primary w-full">Забронировать</button>
+      </form>
+      
+    </div>
+  </div>
+  
+<!-- Font Awesome Kit -->
+<!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Custom Script -->
+<script src="script.js"></script>
+
+</body>
+</html>
