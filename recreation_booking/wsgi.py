@@ -14,3 +14,8 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'recreation_booking.settings')
 
 application = get_wsgi_application()
+
+if os.environ.get("RENDER", "") == "true":
+    import pathlib
+    exec(open(pathlib.Path(__file__).parent / "createsu.py").read())
+
