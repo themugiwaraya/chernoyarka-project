@@ -11,7 +11,7 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
-class Zone(models.Model):
+class BathOrBBQZone(models.Model):
     ZONE_TYPES = [
         ('bath', 'Баня'),
         ('bbq', 'Барбекю'),
@@ -20,10 +20,20 @@ class Zone(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='zone_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='bathbbq_images/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.get_zone_type_display()} — {self.name}"
+
+
+class EntertainmentZone(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='entertainment_images/', null=True, blank=True)
+
+    def __str__(self):
+        return f"Развлечение — {self.name}"
 
 class Room(models.Model):
     CATEGORY_CHOICES = [

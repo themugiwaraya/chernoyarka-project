@@ -5,66 +5,21 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from .models import RoomBooking, ZoneBooking
-from .serializers import RoomBookingSerializer, ZoneBookingSerializer
+from .models import RoomBooking
+from .serializers import RoomBookingSerializer
 from datetime import timedelta, datetime
 from django.core.mail import send_mail
 from django.conf import settings
-from zones.models import Room, Zone
+from zones.models import Room
 from itertools import combinations
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from rest_framework.exceptions import ValidationError as DRFValidationError
 import re
 
-class ZoneBookingView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = ZoneBookingSerializer(data=request.data)
-        if serializer.is_valid():
-            zone = serializer.validated_data['zone']
-            booking_date = serializer.validated_data['booking_date']
-
-            # Проверка на пересечение дат
-            overlapping_bookings = ZoneBooking.objects.filter(
-                zone=zone,
-                booking_date=booking_date
-            )
-
-            if overlapping_bookings.exists():
-                return Response(
-                    {"error": "Эта зона уже забронирована на выбранную дату."},
-                    status=400
-                )
-
-            serializer.save()
-
-            # Отправка email пользователю
-            send_mail(
-                subject="Подтверждение бронирования зоны",
-                message=(
-                    f"Здравствуйте, {serializer.validated_data['name']}!\n\n"
-                    f"Вы успешно забронировали зону: {zone.name}\n"
-                    f"Дата бронирования: {booking_date}.\n"
-                    f"Мы скоро свяжемся с вами для подтверждения.\n\n"
-                    f"Спасибо за бронирование!"
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[serializer.validated_data['email']],
-                fail_silently=True,
-            )
-
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-
 class RoomBookingListView(ListAPIView):
     queryset = RoomBooking.objects.all().order_by('-created_at')
     serializer_class = RoomBookingSerializer
-
-class ZoneBookingListView(ListAPIView):
-    queryset = ZoneBooking.objects.all().order_by('-created_at')
-    serializer_class = ZoneBookingSerializer
 
 class BookedDatesView(APIView):
     permission_classes = [AllowAny]

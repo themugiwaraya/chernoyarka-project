@@ -2,24 +2,20 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import Room, Zone
-from .serializers import RoomSerializer, ZoneSerializer
+from .models import Room, BathOrBBQZone, EntertainmentZone
+from .serializers import RoomSerializer, BathOrBBQZoneSerializer, EntertainmentZoneSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from datetime import datetime
-from booking.models import RoomBooking, ZoneBooking
+from booking.models import RoomBooking
 from rest_framework.permissions import AllowAny
 from .permissions import IsAdminOrReadOnly
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 class RoomListView(ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-class ZoneListView(ListAPIView):
-    queryset = Zone.objects.all()
-    serializer_class = ZoneSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 class RoomCreateView(CreateAPIView):
@@ -27,19 +23,9 @@ class RoomCreateView(CreateAPIView):
     serializer_class = RoomSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-class ZoneCreateView(CreateAPIView):
-    queryset = Zone.objects.all()
-    serializer_class = ZoneSerializer
-    permission_classes = [IsAdminOrReadOnly]
-
 class RoomUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsAdminOrReadOnly]
-
-class ZoneUpdateDeleteView(RetrieveUpdateDestroyAPIView):
-    queryset = Zone.objects.all()
-    serializer_class = ZoneSerializer
     permission_classes = [IsAdminOrReadOnly]
 
 class AvailableRoomsView(APIView):
@@ -56,14 +42,22 @@ class AvailableRoomsView(APIView):
         serializer = RoomSerializer(available_rooms, many=True)
         return Response(serializer.data)
 
-class AvailableZonesView(APIView):
-    permission_classes = [AllowAny]
-    def get(self, request):
-        booking_date = request.GET.get('date')
-        if not booking_date:
-            return Response({'error': 'date обязателен'}, status=400)
-        date_obj = datetime.strptime(booking_date, "%Y-%m-%d").date()
-        booked_zones = ZoneBooking.objects.filter(booking_date=date_obj).values_list('zone_id', flat=True)
-        available_zones = Zone.objects.exclude(id__in=booked_zones)
-        serializer = ZoneSerializer(available_zones, many=True)
-        return Response(serializer.data)
+class BathOrBBQZoneListCreateView(ListCreateAPIView):
+    queryset = BathOrBBQZone.objects.all()
+    serializer_class = BathOrBBQZoneSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+class BathOrBBQZoneDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = BathOrBBQZone.objects.all()
+    serializer_class = BathOrBBQZoneSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+class EntertainmentZoneListCreateView(ListCreateAPIView):
+    queryset = EntertainmentZone.objects.all()
+    serializer_class = EntertainmentZoneSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+class EntertainmentZoneDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = EntertainmentZone.objects.all()
+    serializer_class = EntertainmentZoneSerializer
+    permission_classes = [IsAdminOrReadOnly]
