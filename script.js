@@ -321,3 +321,65 @@ document.getElementById("openBookingModalFromHero")?.addEventListener("click", a
     alert("Ошибка загрузки номеров");
   }
 });
+document.getElementById("showEntertainmentDetails")?.addEventListener("click", function () {
+  const entertainmentItems = document.getElementById("entertainmentItems");
+  if (entertainmentItems.classList.contains("hidden")) {
+    renderEntertainmentItems();
+    entertainmentItems.classList.remove("hidden");
+    this.textContent = "Скрыть";
+  } else {
+    entertainmentItems.classList.add("hidden");
+    this.textContent = "Подробнее об активном отдыхе";
+  }
+});
+
+function renderEntertainmentItems() {
+  const container = document.getElementById("entertainmentItems");
+  container.innerHTML = ""; // Очистить предыдущее содержимое
+
+  const activities = [
+    {
+      name: "Футбольное поле",
+      description: "Профессиональное покрытие и разметка для игры в футбол.",
+      image: "./images/fut.png",
+      price: "5000 KZT/час"
+    },
+    {
+      name: "Волейбольное поле",
+      description: "Открытая площадка для игры в волейбол под открытым небом.",
+      image: "./images/volley.png",
+      price: "4000 KZT/час"
+    },
+    {
+      name: "Баскетбольное поле",
+      description: "Площадка с кольцами и разметкой для баскетбола.",
+      image: "./images/basket.png",
+      price: "4000 KZT/час"
+    },
+    {
+      name: "Детская площадка",
+      description: "Безопасная зона с качелями, горками и игровыми комплексами для детей.",
+      image: "./images/plosh.png",
+      price: "Бесплатно "
+    },
+    {
+      name: "Батуты",
+      description: "Батут для активных игр и прыжков.",
+      image: "./images/batut.png",
+      price: "500 KZT/10 минут"
+    }
+  ];
+
+  activities.forEach(activity => {
+    const item = document.createElement("div");
+    item.className = "bg-gray-100 p-5 rounded-lg shadow-md text-center";
+
+    item.innerHTML = `
+      <img src="${activity.image}" alt="${activity.name}" class="w-full h-40 object-cover rounded mb-4">
+      <h3 class="text-xl font-semibold mb-2">${activity.name}</h3>
+      <p class="text-sm text-gray-600 mb-3">${activity.description}</p>
+      <p class="font-bold text-green-600">${activity.price}</p>
+    `;
+    container.appendChild(item);
+  });
+}

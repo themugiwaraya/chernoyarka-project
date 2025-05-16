@@ -73,14 +73,15 @@
         <div class="hero-item" style="background-image: url('./images/glav3.png')">
             <div class="overlay"></div>
         </div>
-        <div class="hero-item" style="background-image: url('./images/glav1.png')">
+        <div class="hero-item" style="background-image: url('./images/glav4.png')">
             <div class="overlay"></div>
         </div>
     </div>
     <div class="hero-content">
-        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Отдых в ритме природы в гармонии с собой</h1>
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6" style = "color: #ffffff;">Отдых в ритме природы в гармонии с собой</h1>
         <p class="text-3xl text-white mb-4 font-bold">в 30 минутах от города</p>
-        <p class="text-3xl text-white mb-8">Уютные номера, вкусное питание и активный отдых на природе</p>
+        <p class="text-3xl text-white mb-8" style = "color: #ffffff;" >Уютные номера, вкусное питание и активный отдых на природе</p>
+        
         <a href="#accommodation" class="btn btn-outline">Узнать больше</a>
     </div>
 </section>
@@ -159,7 +160,7 @@
     <div class="bg-overlay"></div>
     <div class="section-content">
         <h2 class="text-4xl font-bold text-white mb-6">Активный отдых и развлечения</h2>
-        <p class="text-white mb-8">
+        <p class="text-white mb-8" >
             Разнообразные активности для всей семьи, которые подарят яркие впечатления и помогут провести время с пользой и радостью.
         </p>
         <div class="image-gallery">
@@ -167,9 +168,18 @@
             <div class="gallery-item" style="background-image: url('./images/horse.png')"></div>
             <div class="gallery-item" style="background-image: url('./images/bike.png')"></div>
         </div>
-        <a href="#bath" class="btn btn-outline mt-8">Наши зоны отдыха</a>
+       <div class="flex flex-wrap gap-4 justify-center mt-8">
+  <a href="#bath" class="btn btn-outline" style="border-color: #0f1609;background-color: #0f1609; color: #f3f3f3;">Наши зоны отдыха</a>
+  <button id="showEntertainmentDetails" class="btn btn-primary" style="background-color: #171d11; color: white;">Подробнее об активном отдыхе</button>
+</div>
+
+<!-- Hidden entertainment items -->
+<div id="entertainmentItems" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 hidden">
+  <!-- Мини-дивы будут добавляться динамически через JS -->
+</div>
     </div>
 </section>
+
 
 <!-- Bath and BBQ Section -->
 <section id="bath" class="section bg-white">
