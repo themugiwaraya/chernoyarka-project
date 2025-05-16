@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    RoomListView, RoomCreateView, ZoneCreateView,
+    RoomListView, RoomCreateView,
     RoomUpdateDeleteView, AvailableRoomsView,
     BathOrBBQZoneListCreateView, BathOrBBQZoneDetailView,
     EntertainmentZoneListCreateView, EntertainmentZoneDetailView

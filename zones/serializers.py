@@ -6,6 +6,7 @@ class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = '__all__'
+        
 class BathOrBBQZoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = BathOrBBQZone
