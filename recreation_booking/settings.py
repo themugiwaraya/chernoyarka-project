@@ -90,10 +90,13 @@ WSGI_APPLICATION = 'recreation_booking.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-DATABASES = {
-    'default': dj_database_url.config(default='postgres://postgres:0000@localhost:5432/recreation_booking_db')
-}
+# DATABASES = {
+#     'default': dj_database_url.config(default='postgres://postgres:0000@localhost:5432/recreation_booking_db')
+# }
 
+DATABASES = {
+    "default": dj_database_url.config(conn_max_age=600)
+}
 
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
@@ -161,3 +164,7 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS") == 'True'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
