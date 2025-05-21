@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from .models import RoomBooking
-from .serializers import RoomBookingSerializer
+from .models import RoomBooking, BathOrBBQZoneBooking
+from .serializers import RoomBookingSerializer, BathOrBBQZoneBookingSerializer
 from datetime import timedelta, datetime
 from django.core.mail import send_mail
 from django.conf import settings
@@ -271,3 +271,22 @@ def validate_booking_data(data):
         value = data.get(field, '')
         if sql_injection_pattern.search(value):
             raise ValidationError(f"Недопустимый ввод в поле '{field}'")
+
+class BathOrBBQZoneBookingView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = BathOrBBQZoneBookingSerializer(data=request.data)
+        if serializer.is_valid():
+            zone = serializer.validated_data['zone']
+            booking_date = serializer.validated_data['booking_date']
+
+            # Проверка на занятость
+            exists = BathOrBBQZoneBooking.objects.filter(zone=zone, booking_date=booking_date).exists()
+            if exists:
+                return Response({"error": "Эта зона уже забронирована на эту дату."}, status=400)
+
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=400)
