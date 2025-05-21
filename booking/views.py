@@ -290,3 +290,7 @@ class BathOrBBQZoneBookingView(APIView):
             return Response(serializer.data, status=201)
 
         return Response(serializer.errors, status=400)
+    
+class BathOrBBQZoneBookingListView(ListAPIView):
+    queryset = BathOrBBQZoneBooking.objects.all().order_by('-created_at')
+    serializer_class = BathOrBBQZoneBookingSerializer
