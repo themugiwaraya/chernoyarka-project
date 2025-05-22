@@ -280,16 +280,44 @@ class BathOrBBQZoneBookingView(APIView):
         if serializer.is_valid():
             zone = serializer.validated_data['zone']
             booking_date = serializer.validated_data['booking_date']
+            hours = serializer.validated_data.get('hours', 1)
 
-            # Проверка на занятость
             exists = BathOrBBQZoneBooking.objects.filter(zone=zone, booking_date=booking_date).exists()
             if exists:
                 return Response({"error": "Эта зона уже забронирована на эту дату."}, status=400)
 
-            serializer.save()
+            booking = serializer.save()
+
+            total_price = zone.price_per_day * hours
+
+            send_mail(
+                subject="Подтверждение бронирования зоны отдыха",
+                message=(
+                    f"Здравствуйте, {booking.name}!\n\n"
+                    f"Вы успешно забронировали:\n"
+                    f"🏕 Зона: {zone.name}\n"
+                    f"📅 Дата: {booking_date.strftime('%Y-%m-%d')}\n"
+                    f"⏱ На {hours} час(ов)\n"
+                    f"💰 Стоимость: {total_price:,.0f} KZT\n\n"
+                    f"📌 Важная информация:\n"
+                    f"Предоплата вносится в течение суток через Kaspi по номеру:\n"
+                    f"+7 777 777 77 77 (Имя Ф.)\n"
+                    f"❗ Укажите имя клиента и дату брони в комментарии.\n\n"
+                    f"⚠️ Без оплаты бронь может быть аннулирована.\n"
+                    f"С уважением,\n"
+                    f"Черноярская жемчужина\n"
+                    f"📞 +7 777 777 77 77\n"
+                    f"📧 info@chernoyarka.kz"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[booking.email],
+                fail_silently=False
+            )
+
             return Response(serializer.data, status=201)
 
         return Response(serializer.errors, status=400)
+
     
 class BathOrBBQZoneBookingListView(ListAPIView):
     queryset = BathOrBBQZoneBooking.objects.all().order_by('-created_at')
