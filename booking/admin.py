@@ -10,7 +10,7 @@ class RoomBookingAdmin(admin.ModelAdmin):
 
 @admin.register(BathOrBBQZoneBooking)
 class BathOrBBQZoneBookingAdmin(admin.ModelAdmin):
-    list_display = ('zone', 'name', 'booking_date', 'created_at')
+    list_display = ('zone', 'name', 'booking_date', 'hours', 'created_at')  
     list_filter = ('zone', 'booking_date')
     search_fields = ('name', 'phone', 'email')
     ordering = ('-created_at',)
