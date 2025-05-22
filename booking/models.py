@@ -30,7 +30,9 @@ class BathOrBBQZoneBooking(models.Model):
     email = models.EmailField()
     booking_date = models.DateField()
     note = models.TextField(blank=True)
+    hours = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
+     
 
     def __str__(self):
         return f"{self.zone.name} — {self.booking_date}"
