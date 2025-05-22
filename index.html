@@ -132,11 +132,12 @@
 </section>
 
 <div class="w-full flex justify-center">
-    <div id="availableRooms" class="grid grid-cols-1 gap-6 w-full max-w-3xl mt-6">
+    <div id="availableRooms" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10"></div>
     </div>
   </div>
   
 
+<!-- Accommodation Section -->
 <!-- Accommodation Section -->
 <section id="accommodation" class="section bg-gray-100">
     <div class="section-content">
@@ -148,6 +149,16 @@
             <div class="gallery-item" style="background-image: url('./images/room1.png')"></div>
             <div class="gallery-item" style="background-image: url('./images/room2.png')"></div>
         </div>
+        <!-- Новая секция с фото бильярда и описанием -->
+        <div class="mt-8 flex flex-col items-center">
+            <div class="w-full max-w-lg">
+                <div class="gallery-item" style="background-image: url('/images/bil.png'); height: 300px;"></div>
+            </div>
+            <p class="text-gray-700 mt-4 text-center max-w-xl">
+                На территории также имеется отдельно стоящий дом на 16 койко-мест. Внутри есть караоке, бильярд и кухня для самостоятельного приготовления еды.
+            </p>
+        </div>
+        <!-- Конец новой секции -->
         <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
             <a href="#hero" class="btn btn-primary">Забронировать</a>
             <a href="#entertainment" class="btn btn-outline" style="border-color: #4F772D; color: #4F772D;">Наши развлечения</a>
@@ -182,6 +193,7 @@
 
 
 <!-- Bath and BBQ Section -->
+<!-- Bath and BBQ Section -->
 <section id="bath" class="section bg-white">
     <div class="section-content">
         <h2 class="text-4xl font-bold text-gray-800 mb-6">БАНИ И BBQ</h2>
@@ -196,7 +208,13 @@
             <div class="gallery-item" style="background-image: url('./images/bes2.png')"></div>
             <div class="gallery-item" style="background-image: url('./images/bes3.png')"></div>
         </div>
+        <!-- Кнопка забронировать -->
+        <button id="openBathBookingModal" class="btn btn-primary mt-8">Подробнее о БАНИ И BBQ</button>
+        <!-- Конец кнопки -->
         <a href="#contacts" class="btn btn-outline mt-8" style="border-color: #4F772D; color: #4F772D;">Как нас найти?</a>
+        <!-- Контейнер для карточек зон -->
+        <div id="bathZoneCards" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10"></div>
+
     </div>
 </section>
 
@@ -236,12 +254,16 @@
             <div class="bg-gray-100 p-6 rounded-lg">
                 <h3 class="text-xl font-bold mb-4">Контакты</h3>
                 <p class="mb-2"><i class="fas fa-phone mr-2"></i> +7 (705) 731-00-58 </p>
+                <p class="mb-2"><i class="fas fa-phone mr-2"></i> Прием звонков:10:00-19:00 </p>
                
             </div>
             <div class="bg-gray-100 p-6 rounded-lg">
                 <h3 class="text-xl font-bold mb-4">Режим работы</h3>
                 <p class="mb-2">Понедельник - Пятница: 10:00 - 19:00</p>
-                <p class="mb-2">Суббота - Воскресенье: 10:00 - 19:00</p>
+                <p class="mb-2">Суббота : 10:00 - 19:00</p>
+                <p class="mb-2">Воскресенье: Выходной</p>
+                <p class="mb-2">Работа базы: 10:00-18:00</p>
+                
             </div>
         </div>
     </div>
@@ -320,7 +342,49 @@
       
     </div>
   </div>
-  
+  <!-- Modal Popup for Bath Booking -->
+<div id="bathBookingModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+        <button id="closeBathModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+        <h2 class="text-2xl font-bold mb-4">Забронировать баню или BBQ</h2>
+        <p class="mb-4">Оставьте заявку и мы свяжемся с вами для подтверждения бронирования.</p>
+        <form id="bathBookingForm" data-zone-id="">
+            <!-- Имя -->
+            <div class="mb-4">
+                <input type="text" id="fullNameBath" placeholder="Ваше имя" required
+                       class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <!-- Телефон -->
+            <div class="mb-4">
+                <input type="tel" id="phoneBath" placeholder="Ваш телефон" required
+                       class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <!-- Email -->
+            <div class="mb-4">
+                <input type="email" id="emailBath" placeholder="Ваш email"
+                       class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <!-- Дата заезда -->
+            <div class="mb-4">
+                <label for="checkinBath" class="block text-sm font-medium text-gray-700 mb-1">Дата заезда</label>
+                <input type="text" id="checkinBath" class="flatpickr-input w-full px-4 py-2 border rounded-lg" />
+            </div>
+            <!-- Количество часов -->
+            <div class="mb-4">
+            <label for="hoursBath" class="block text-sm font-medium text-gray-700 mb-1">На сколько часов?</label>
+            <input type="number" id="hoursBath" min="1" placeholder="Например, 2" required
+                    class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <!-- Пожелания -->
+            <div class="mb-4">
+                <textarea id="notesBath" placeholder="Ваши пожелания"
+                          class="w-full px-4 py-2 border rounded-lg" rows="3"></textarea>
+            </div>
+            <!-- Кнопка -->
+            <button type="submit" class="btn btn-primary w-full">Забронировать</button>
+        </form>
+    </div>
+</div>
 <!-- Font Awesome Kit -->
 <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

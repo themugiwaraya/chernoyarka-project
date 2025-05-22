@@ -348,3 +348,18 @@
   .hidden {
   display: none;
 }
+#bathBookingModal .flatpickr-input {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+#bathBookingModal .flatpickr-input:focus {
+    border-color: #4F772D;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 119, 45, 0.2);
+}

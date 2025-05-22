@@ -276,7 +276,7 @@ document.getElementById("openBookingModalFromHero")?.addEventListener("click", a
 
     rooms.forEach(room => {
       const card = document.createElement("div");
-      card.className = "room-card p-4 border rounded shadow text-center max-w-xl mx-auto bg-white flex flex-col justify-between";
+      card.className = "flex flex-col justify-between h-full bg-white p-6 rounded-xl shadow-lg text-center transition hover:shadow-2xl";
 
       const checkinDate = new Date(checkin);
       const checkoutDate = new Date(checkout);
@@ -291,16 +291,16 @@ document.getElementById("openBookingModalFromHero")?.addEventListener("click", a
       const totalPrice = guests * nights * room.price_per_night;
     
       card.innerHTML = `
-        <h3 class="text-xl font-bold mb-2">${room.name}</h3>
-        <p class="mb-1 text-sm text-gray-600">${room.description}</p>
-        <p>Вместимость: ${room.capacity}</p>
-        <p>Цена за человека: ${room.price_per_night} KZT</p>
-        <p>Гостей: ${guests}, Ночей: ${nights}</p>
-        <p class="font-semibold text-lg mt-1">Итого: ${totalPrice} KZT</p>
-        <button class="btn btn-primary mt-3" data-room-id="${room.id}">
-          Забронировать
-        </button>
-      `;
+      <h3 class="text-2xl font-bold mb-3">${room.name}</h3>
+      <p class="mb-2 text-sm text-gray-600">${room.description}</p>
+      <p class="mb-1">👥 Вместимость: <strong>${room.capacity}</strong></p>
+      <p class="mb-1">💰 Цена за человека: <strong>${room.price_per_night} KZT</strong></p>
+      <p class="mb-1">🧍‍♂️ Гостей: ${guests}, 🌙 Ночей: ${nights}</p>
+      <p class="text-lg font-bold text-green-600 mt-2">Итого: ${totalPrice.toLocaleString()} KZT</p>
+      <button class="btn btn-primary mt-5 py-2 px-4 rounded-full" data-room-id="${room.id}">
+        ЗАБРОНИРОВАТЬ
+      </button>
+    `;
     
       container.appendChild(card);
     
@@ -335,39 +335,46 @@ document.getElementById("showEntertainmentDetails")?.addEventListener("click", f
 
 function renderEntertainmentItems() {
   const container = document.getElementById("entertainmentItems");
-  container.innerHTML = ""; // Очистить предыдущее содержимое
+  container.innerHTML = ""; 
 
   const activities = [
     {
       name: "Футбольное поле",
       description: "Профессиональное покрытие и разметка для игры в футбол.",
-      image: "./images/fut.png",
-      price: "5000 KZT/час"
+      image: "/images/fut.png",
+      price: "Для гостей бесплатно, для тимбилдингов 5000 KZT/час"
     },
     {
       name: "Волейбольное поле",
       description: "Открытая площадка для игры в волейбол под открытым небом.",
-      image: "./images/volley.png",
-      price: "4000 KZT/час"
+      image: "/images/volley.png",
+      price: "Для гостей бесплатно, для тимбилдингов 5000 KZT/час"
     },
     {
       name: "Баскетбольное поле",
       description: "Площадка с кольцами и разметкой для баскетбола.",
-      image: "./images/basket.png",
-      price: "4000 KZT/час"
+      image: "/images/basket.png",
+      price: "Для гостей бесплатно, для тимбилдингов 5000 KZT/час"
     },
     {
       name: "Детская площадка",
       description: "Безопасная зона с качелями, горками и игровыми комплексами для детей.",
-      image: "./images/plosh.png",
+      image: "/images/plosh.png",
       price: "Бесплатно "
     },
     {
       name: "Батуты",
       description: "Батут для активных игр и прыжков.",
-      image: "./images/batut.png",
+      image: "/images/batut.png", 
       price: "500 KZT/10 минут"
-    }
+    },
+    // Добавить в массив activities функции renderEntertainmentItems()
+{
+  name: "Тир",
+  description: "Стрелковый тир с инструктором и безопасным оборудованием.",
+  image: "/images/tir.png",
+  price: "1000 KZT/час"
+}
   ];
 
   activities.forEach(activity => {
@@ -383,3 +390,133 @@ function renderEntertainmentItems() {
     container.appendChild(item);
   });
 }
+
+// Open/Close Bath Booking Modal
+document.getElementById("openBathBookingModal")?.addEventListener("click", async () => {
+  const container = document.getElementById("bathZoneCards");
+  container.innerHTML = "";
+
+  try {
+    const res = await fetch("https://chernoyarka-project-backend.onrender.com/api/zones/bath-bbq/");
+    const zones = await res.json();
+
+    if (zones.length === 0) {
+      container.innerHTML = "<p class='text-gray-700'>Нет доступных зон для бронирования.</p>";
+      return;
+    }
+
+    zones.forEach(zone => {
+      const card = document.createElement("div");
+      card.className = "flex flex-col justify-between h-full bg-gray-100 p-5 rounded-lg shadow-md text-center";
+
+      card.innerHTML = `
+        <div>
+          <img src="https://chernoyarka-project-backend.onrender.com${zone.image || ''}" alt="${zone.name}" class="w-full h-40 object-cover rounded mb-3">
+          <h3 class="text-lg font-semibold mb-2">${zone.name}</h3>
+          <p class="text-sm text-gray-600 mb-3">${zone.description}</p>
+          <p class="font-bold text-green-600">Цена: ${zone.price_per_day} KZT</p>
+        </div>
+        <button class="btn btn-primary mt-4" data-zone-id="${zone.id}">
+          ЗАБРОНИРОВАТЬ
+        </button>
+      `;
+
+      container.appendChild(card);
+
+      // обработчик кнопки брони
+      card.querySelector("button").addEventListener("click", () => {
+        document.getElementById("bathBookingModal").classList.remove("hidden");
+        document.getElementById("bathBookingForm").dataset.zoneId = zone.id;
+      });
+    });
+
+  } catch (err) {
+    console.error("Ошибка при получении зон:", err);
+    alert("Ошибка при загрузке зон для бронирования.");
+  }
+});
+
+
+// Initialize Flatpickr for Bath Booking
+flatpickr("#checkinBath", {
+    altInput: true,
+    altFormat: "d.m.Y",
+    dateFormat: "Y-m-d",
+    minDate: "today"
+});
+
+// Handle Bath Booking Form Submission
+document.getElementById("bathBookingForm")?.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById("fullNameBath").value.trim();
+  const phone = document.getElementById("phoneBath").value.trim();
+  const email = document.getElementById("emailBath").value.trim();
+  const checkIn = document.getElementById("checkinBath").value;
+  const note = document.getElementById("notesBath").value.trim();
+  const zoneId = parseInt(this.dataset.zoneId); 
+  const hours = parseInt(document.getElementById("hoursBath").value);
+
+  if (!hours || hours < 1) {
+    alert("Укажите количество часов.");
+    return;
+  }
+
+
+  if (!name || !phone || !email || !checkIn || !zoneId) {
+    alert("Пожалуйста, заполните все поля.");
+    return;
+  }
+
+  const payload = {
+    name,
+    phone,
+    email,
+    booking_date: checkIn,
+    note,
+    zone: zoneId,
+    hours
+
+  };
+
+  try {
+    const res = await fetch("https://chernoyarka-project-backend.onrender.com/api/bathbbq/book/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      alert("Бронирование успешно отправлено!");
+      this.reset();
+      document.getElementById("bathBookingModal").classList.add("hidden");
+    } else {
+      const err = await res.json();
+      alert("Ошибка: " + JSON.stringify(err));
+    }
+  } catch (error) {
+    console.error("Ошибка при отправке:", error);
+    alert("Произошла ошибка при отправке.");
+  }
+});
+// Закрытие модалки бань и BBQ
+document.getElementById("closeBathModal")?.addEventListener("click", () => {
+  document.getElementById("bathBookingModal").classList.add("hidden");
+});
+
+// Закрытие при клике вне модального окна
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("bathBookingModal");
+  if (e.target === modal) {
+    modal.classList.add("hidden");
+  }
+});
+
+// Закрытие по нажатию клавиши Escape
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    document.getElementById("bathBookingModal")?.classList.add("hidden");
+  }
+});
