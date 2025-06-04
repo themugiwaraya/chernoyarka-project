@@ -1,3 +1,6 @@
+body {
+    overflow: hidden;
+  }
 /* === Hero Section Styles === */
 .hero-grid-horizontal {
     display: grid;
