@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17.0-alpine3.20 
+    container_name: jkh_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./temp:/temp
+    networks:
+      - app
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.my
+    env_file: ./.env
+    depends_on:
+      - postgres
+    ports:
+      - 0.0.0.0:8888:8000
+    networks:
+      - app
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   env_file: ./.env
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - 0.0.0.0:8881:3000
+  #   networks:
+  #     - jkh_app
+      
+  # nginx:
+  #   image: nginx:stable-alpine
+  #   ports:
+  #     - "8889:80"
+  #   volumes:
+  #     - './nginx.conf:/etc/nginx/nginx.conf'
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.jkh.entrypoints=https"
+  #     - "traefik.http.routers.jkh.rule=Host(`jkh.devops.loc`)"
+  #     - "traefik.http.routers.jkh.tls=true"
+  #     - "traefik.http.routers.jkh.tls.certresolver=letsEncrypt"
+  #     - "traefik.http.routers.jkh.service=jkh-service"
+  #     - "traefik.http.services.jkh-service.loadbalancer.server.port=80"
+  #   depends_on:
+  #     - backend
+  #     - frontend
+  #   networks:
+  #     - jkh_app
+  #     - web
+
+volumes:
+  pgdata:
+
+networks:
+  app:
+  web:
+    external: true
